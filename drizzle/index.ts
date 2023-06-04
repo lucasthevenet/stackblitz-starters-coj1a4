@@ -1,12 +1,7 @@
-import { createPool } from '@vercel/postgres';
-import { drizzle } from 'drizzle-orm/node-postgres';
+import postgres from 'postgres';
+import { drizzle } from 'drizzle-orm/postgres-js';
 import * as schema from './schema-test';
 
-const dbClient = createPool({
-  connectionString: process.env.POSTGRES_URL,
-});
+const queryConnection = postgres(process.env.POSTGRES_URL!);
 
-export const db = drizzle(dbClient, { schema });
-
-
-db.query.address.
+export const db = drizzle(queryConnection, { schema });
